@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:note_app/core/error/failures.dart';
 import 'package:note_app/features/notes/domain/repositories/note_repository.dart';
 
 class DeleteNoteUsecase {
@@ -5,7 +7,7 @@ class DeleteNoteUsecase {
 
   DeleteNoteUsecase({required this.repo});
 
-  Future<void> call(String id) async {
-    await repo.deleteNote(id);
+  Future<Either<Failure, void>> call(String id) async {
+    return await repo.deleteNote(id);
   }
 }

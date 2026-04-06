@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dartz/dartz.dart';
+import 'package:note_app/core/error/failures.dart';
 import 'package:note_app/features/notes/data/datasources/note_remote_datasource.dart';
 import 'package:note_app/features/notes/domain/entities/note_entity.dart';
 import 'package:note_app/features/notes/domain/repositories/note_repository.dart';
@@ -8,18 +12,38 @@ class NoteRepositoryImpl implements NoteRepository {
   NoteRepositoryImpl({required this.remoteDatasource});
 
   @override
-  Future<void> deleteNote(String id) async {
-    await remoteDatasource.deleteNote(id);
+  Future<Either<Failure, void>> deleteNote(String id) async {
+    try {
+      await remoteDatasource.deleteNote(id);
+      return Right(unit);
+    } on SocketException {
+      return Left(NetworkFailure());
+    } catch (e) {
+      return Left(UnexpectedFailure());
+    }
   }
 
   @override
-  Future<List<NoteEntity>> getAllNotes() async {
-    return await remoteDatasource.getAllNotes();
+  Future<Either<Failure, List<NoteEntity>>> getAllNotes() async {
+    try {
+      final notes = await remoteDatasource.getAllNotes();
+      return Right(notes);
+    } on SocketException {
+      return Left(NetworkFailure());
+    } catch (e) {
+      return Left(UnexpectedFailure());
+    }
   }
 
   @override
-  Future<void> saveNote(NoteEntity note) async {
-    await remoteDatasource.saveNote(note);
-
+  Future<Either<Failure, void>> saveNote(NoteEntity note) async {
+    try {
+      await remoteDatasource.saveNote(note);
+      return Right(unit);
+    } on SocketException {
+      return Left(NetworkFailure());
+    } catch (e) {
+      return Left(UnexpectedFailure());
+    }
   }
 }
