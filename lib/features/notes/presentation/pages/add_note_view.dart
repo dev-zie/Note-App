@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/features/notes/domain/entities/note_entity.dart';
 import 'package:note_app/features/notes/presentation/cubit/notes_cubit.dart';
-
 class AddNoteView extends StatefulWidget {
   const AddNoteView({super.key});
 
@@ -11,8 +10,8 @@ class AddNoteView extends StatefulWidget {
 }
 
 class _AddNoteViewState extends State<AddNoteView> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController contentController = TextEditingController();
+  final titleController = TextEditingController();
+  final contentController = TextEditingController();
 
   @override
   void dispose() {
@@ -27,18 +26,18 @@ class _AddNoteViewState extends State<AddNoteView> {
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 50),
         child: Column(
-          mainAxisAlignment: .center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(label: Text('Title')),
+              decoration: const InputDecoration(label: Text('Title')),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: contentController,
-              decoration: InputDecoration(label: Text('Content')),
+              decoration: const InputDecoration(label: Text('Content')),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 final note = NoteEntity(
@@ -47,12 +46,10 @@ class _AddNoteViewState extends State<AddNoteView> {
                   content: contentController.text,
                   createdAt: DateTime.now(),
                 );
-
                 context.read<NotesCubit>().saveNote(note);
-
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         ),

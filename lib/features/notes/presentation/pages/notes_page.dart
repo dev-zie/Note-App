@@ -10,13 +10,12 @@ class NotesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Notes')),
+      appBar: AppBar(title: const Text('Notes')),
       body: BlocBuilder<NotesCubit, NotesState>(
         builder: (context, state) {
           if (state is NotesLoading) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (state is NotesLoaded) {
             return ListView.builder(
               itemCount: state.notes.length,
@@ -35,22 +34,24 @@ class NotesView extends StatelessWidget {
               },
             );
           }
-
           if (state is NotesError) {
             return Center(child: Text(state.message));
           }
           return const SizedBox();
         },
       ),
-
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final cubit = context.read<NotesCubit>();
+          await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddNoteView()),
+            MaterialPageRoute(
+              builder: (context) =>
+                  BlocProvider.value(value: cubit, child: const AddNoteView()),
+            ),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
