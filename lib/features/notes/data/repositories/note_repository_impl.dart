@@ -20,5 +20,6 @@ class NoteRepositoryImpl implements NoteRepository {
   @override
   Future<void> saveNote(NoteEntity note) async {
     await remoteDatasource.saveNote(note);
+
   }
 }
