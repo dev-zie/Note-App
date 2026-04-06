@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:note_app/features/notes/presentation/cubit/notes_cubit.dart';
 import 'package:note_app/features/notes/presentation/cubit/notes_state.dart';
+import 'package:note_app/features/notes/presentation/pages/add_note_view.dart';
 
 class NotesView extends StatelessWidget {
   const NotesView({super.key});
@@ -43,7 +44,12 @@ class NotesView extends StatelessWidget {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddNoteView()),
+          );
+        },
         child: Icon(Icons.add),
       ),
     );

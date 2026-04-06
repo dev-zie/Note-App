@@ -22,27 +22,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      home: BlocProvider(
-        create: (context) {
-          final firestore = FirebaseFirestore.instance;
-          final remoteDatasource = NoteRemoteDatasource(firestore);
-          final repository = NoteRepositoryImpl(
-            remoteDatasource: remoteDatasource,
-          );
-          final getNotesUsecase = GetNotesUsecase(repo: repository);
-          final saveNoteUsecase = SaveNoteUsecase(repo: repository);
-          final deleteNoteUsecase = DeleteNoteUsecase(repo: repository);
+    return BlocProvider(
+      create: (context) {
+        final firestore = FirebaseFirestore.instance;
+        final remoteDatasource = NoteRemoteDatasource(firestore);
+        final repository = NoteRepositoryImpl(
+          remoteDatasource: remoteDatasource,
+        );
+        final getNotesUsecase = GetNotesUsecase(repo: repository);
+        final saveNoteUsecase = SaveNoteUsecase(repo: repository);
+        final deleteNoteUsecase = DeleteNoteUsecase(repo: repository);
 
-          return NotesCubit(
-            getNotesUsecase: getNotesUsecase,
-            saveNoteUsecase: saveNoteUsecase,
-            deleteNoteUsecase: deleteNoteUsecase,
-          )..getNotes();
-        },
-        child: NotesView(),
-      ),
+        return NotesCubit(
+          getNotesUsecase: getNotesUsecase,
+          saveNoteUsecase: saveNoteUsecase,
+          deleteNoteUsecase: deleteNoteUsecase,
+        )..getNotes();
+      },
+      child: MaterialApp(theme: ThemeData.dark(), home: NotesView()),
     );
   }
 }
