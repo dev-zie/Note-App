@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_app/features/notes/data/models/note_model.dart';
 import 'package:note_app/features/notes/domain/entities/note_entity.dart';
 import 'package:note_app/features/notes/domain/usecases/delete_note_usecase.dart';
 import 'package:note_app/features/notes/domain/usecases/get_notes_usecase.dart';
